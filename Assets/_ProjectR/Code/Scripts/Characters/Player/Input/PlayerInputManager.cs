@@ -12,6 +12,9 @@ public class PlayerInputManager : MonoBehaviour
 
     private bool _isJumpPressed = false;
     public bool IsJumpPressed => _isJumpPressed;
+    
+    private bool _isJumpHeld = false;
+    public bool IsJumpHeld => _isJumpHeld;
 
     private bool _isSprintHold = false;
     public bool SprintHold => _isSprintHold;
@@ -27,8 +30,8 @@ public class PlayerInputManager : MonoBehaviour
     private bool _isUseItemPressed = false;
     public bool IsUseItemPressed => _isUseItemPressed;
 
-    private bool _isUseItemHold = false;
-    public bool IsUseItemHold => _isUseItemHold;
+    private bool _isUseItemHeld = false;
+    public bool IsUseItemHeld => _isUseItemHeld;
 
     // Other
     private bool _isInteractPressed = false;
@@ -73,7 +76,6 @@ public class PlayerInputManager : MonoBehaviour
 
         // Use Item
         _playerInputActions.Default.UseItem.started += ProcessStartedUseItemInput;
-        _playerInputActions.Default.UseItem.performed += ProcessPerformedUseItemInput;
         _playerInputActions.Default.UseItem.canceled += ProcessCanceledUseItemInput;
 
         // Interact
@@ -101,7 +103,6 @@ public class PlayerInputManager : MonoBehaviour
 
         // Use Item
         _playerInputActions.Default.UseItem.started -= ProcessStartedUseItemInput;
-        _playerInputActions.Default.UseItem.performed -= ProcessPerformedUseItemInput;
         _playerInputActions.Default.UseItem.canceled -= ProcessCanceledUseItemInput;
 
         // Interact
@@ -114,8 +115,16 @@ public class PlayerInputManager : MonoBehaviour
     }
 
     // Jump
-    private void ProcessStartedJumpInput(InputAction.CallbackContext context) { StartCoroutine(ProcessStartedJumpInputCoroutine()); }
-    private void ProcessCanceledJumpInput(InputAction.CallbackContext context) { _isJumpPressed = false; }
+    private void ProcessStartedJumpInput(InputAction.CallbackContext context)
+    {
+        StartCoroutine(ProcessStartedJumpInputCoroutine());
+        _isJumpHeld = true;
+    }
+    private void ProcessCanceledJumpInput(InputAction.CallbackContext context)
+    {
+        _isJumpPressed = false;
+        _isJumpHeld = false;
+    }
 
     // Sprint 
     private void ProcessPerformedSprintInput(InputAction.CallbackContext context) { _isSprintHold = true; }
@@ -126,9 +135,15 @@ public class PlayerInputManager : MonoBehaviour
     private void ProcessCanceledDashInput(InputAction.CallbackContext context) { _isDashPressed = false; }
 
     // Use Item
-    private void ProcessStartedUseItemInput(InputAction.CallbackContext context) { StartCoroutine(ProcessStartedUseItemInputCoroutine()); }
-    private void ProcessPerformedUseItemInput(InputAction.CallbackContext context) { _isUseItemHold = true; }
-    private void ProcessCanceledUseItemInput(InputAction.CallbackContext context) { _isUseItemPressed = false; _isUseItemHold = false; }
+    private void ProcessStartedUseItemInput(InputAction.CallbackContext context) { 
+        StartCoroutine(ProcessStartedUseItemInputCoroutine());
+        _isUseItemHeld = true;
+    }
+    private void ProcessCanceledUseItemInput(InputAction.CallbackContext context) 
+    { 
+        _isUseItemPressed = false;
+        _isUseItemHeld = false; 
+    }
 
     // Interact
     private void ProcessStartedInteractInput(InputAction.CallbackContext context) { StartCoroutine(ProcessStartedInteractInputCoroutine()); }
@@ -155,7 +170,6 @@ public class PlayerInputManager : MonoBehaviour
     {
         _isJumpPressed = true;
         yield return null;
-        // Check if object still exists
         if (this != null)
         {
             _isJumpPressed = false;

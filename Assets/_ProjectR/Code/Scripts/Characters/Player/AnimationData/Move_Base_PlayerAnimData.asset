@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cfcfec47cb475e147bfe28d4b2ac7a74, type: 3}
-  m_Name: Move_Legs_PlayerAnimData
+  m_Name: Move_Base_PlayerAnimData
   m_EditorClassIdentifier: 
   SamplingRate: 10
   FrameIndex: 090000000a0000000b0000000c0000000d0000000e0000000f00000010000000

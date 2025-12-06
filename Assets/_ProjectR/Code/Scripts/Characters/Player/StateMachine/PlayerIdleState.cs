@@ -1,14 +1,27 @@
-using TMPro;
 using UnityEngine;
 
 public class PlayerIdleState : PlayerBaseState
 {
     [Header("Transition params")]
     [SerializeField] private PlayerMoveState _moveState;
+    [SerializeField] private PlayerFallState _fallState;
+    [SerializeField] private PlayerJumpState _jumpState;
 
     public override void CheckExitState(PlayerStateManager player)
     {
         if (!FinishedExitTime()) return;
+
+        if (!player.Deps.Locomotion.IsGrounded)
+        {
+            player.SwitchState(_fallState);
+            return;
+        }
+
+        if (player.Deps.Input.IsJumpPressed && player.Deps.Locomotion.CanJump()) 
+        {
+            player.SwitchState(_jumpState);
+            return;
+        }
 
         if (player.Deps.Locomotion.HorizontalVel != 0f)
         {
@@ -19,9 +32,7 @@ public class PlayerIdleState : PlayerBaseState
 
     public override void EnterState(PlayerStateManager player)
     {
-        InitializeState();
-
-        player.Deps.Animation.PlayBaseAnimation(player.Deps.Animation.IdleLegsAnim);
+        player.Deps.Animation.PlayBaseAnimation(player.Deps.Animation.IdleBaseAnim);
     }
 
     public override void ExitState(PlayerStateManager player)
@@ -31,16 +42,11 @@ public class PlayerIdleState : PlayerBaseState
 
     public override void UpdateState(PlayerStateManager player)
     {
-        player.Deps.Locomotion.CalculateHorizontalVel();
-        player.Deps.Locomotion.CalculateVerticalVel();
-
-        if (player.Deps.Input.IsUseItemHold) player.Deps.UseItem.Use();
-
-        if (player.Deps.Input.IsJumpPressed) player.Deps.Locomotion.Jump();
+        if (player.Deps.Input.IsUseItemHeld) player.Deps.UseItem.Use();
     }
 
     public override void FixedUpdateState(PlayerStateManager player)
     {
-        player.Deps.Locomotion.Move();
+
     }
 }

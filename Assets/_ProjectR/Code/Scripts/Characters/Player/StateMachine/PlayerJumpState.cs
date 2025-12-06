@@ -1,17 +1,15 @@
 using UnityEngine;
 
-public class PlayerMoveState : PlayerBaseState
+public class PlayerJumpState : PlayerBaseState
 {
     [Header("Transition params")]
-    [SerializeField] private PlayerIdleState _idleState;
     [SerializeField] private PlayerFallState _fallState;
-    [SerializeField] private PlayerJumpState _jumpState;
-
+    
     public override void CheckExitState(PlayerStateManager player)
     {
         if (!FinishedExitTime()) return;
-
-        if (!player.Deps.Locomotion.IsGrounded)
+        
+        if (player.Deps.Locomotion.VerticalVel < 0f)
         {
             player.SwitchState(_fallState);
             return;
@@ -19,20 +17,15 @@ public class PlayerMoveState : PlayerBaseState
 
         if (player.Deps.Input.IsJumpPressed && player.Deps.Locomotion.CanJump())
         {
-            player.SwitchState(_jumpState);
-            return;
-        }
-
-        if (player.Deps.Locomotion.HorizontalVel == 0f)
-        {
-            player.SwitchState(_idleState);
+            player.SwitchState(this);
             return;
         }
     }
 
     public override void EnterState(PlayerStateManager player)
     {
-        player.Deps.Animation.PlayBaseAnimation(player.Deps.Animation.MoveBaseAnim);
+        player.Deps.Locomotion.Jump();
+        player.Deps.Animation.PlayBaseAnimation(player.Deps.Animation.JumpBaseAnim);
     }
 
     public override void ExitState(PlayerStateManager player)

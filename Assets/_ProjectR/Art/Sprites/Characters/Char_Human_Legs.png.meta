@@ -473,6 +473,50 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Char_Human_Legs_17
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 48
+        height: 48
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8564c9a69ca4c30428640ff6332a74d6
+      internalID: -872054464
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Char_Human_Legs_18
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 48
+        height: 48
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4d9238e4c4d7eda41ad393d8ec04487e
+      internalID: 1313944827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -496,6 +540,8 @@ TextureImporter:
       Char_Human_Legs_14: -507806368
       Char_Human_Legs_15: 337424361
       Char_Human_Legs_16: 1010075857
+      Char_Human_Legs_17: -872054464
+      Char_Human_Legs_18: 1313944827
       Char_Human_Legs_2: 628834884
       Char_Human_Legs_3: 2080925359
       Char_Human_Legs_4: -1504601742

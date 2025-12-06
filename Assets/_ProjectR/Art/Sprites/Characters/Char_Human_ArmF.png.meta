@@ -473,6 +473,50 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Char_Human_ArmF_17
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 48
+        height: 48
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd50f673f0cdaec43a69ced1451beaf5
+      internalID: 56222851
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Char_Human_ArmF_18
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 48
+        height: 48
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd2b08209aacf1d469f906fb966dc944
+      internalID: -1684923417
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -496,6 +540,8 @@ TextureImporter:
       Char_Human_ArmF_14: -1878243324
       Char_Human_ArmF_15: 1234790868
       Char_Human_ArmF_16: -917846505
+      Char_Human_ArmF_17: 56222851
+      Char_Human_ArmF_18: -1684923417
       Char_Human_ArmF_2: -513879578
       Char_Human_ArmF_3: -688449346
       Char_Human_ArmF_4: 1645580739

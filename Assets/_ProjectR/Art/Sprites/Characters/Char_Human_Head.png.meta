@@ -473,6 +473,50 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Char_Human_Head_17
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 48
+        height: 48
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fefa20abf812a1d41808429a25c2141e
+      internalID: 670302539
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Char_Human_Head_18
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 48
+        height: 48
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0fa7066ca089c848bb671096dbd721c
+      internalID: 691959561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -496,6 +540,8 @@ TextureImporter:
       Char_Human_Head_14: -1660145443
       Char_Human_Head_15: -1598412762
       Char_Human_Head_16: -342336372
+      Char_Human_Head_17: 670302539
+      Char_Human_Head_18: 691959561
       Char_Human_Head_2: 1301731698
       Char_Human_Head_3: 1227108426
       Char_Human_Head_4: -3420141

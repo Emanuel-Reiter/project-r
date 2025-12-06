@@ -16,19 +16,33 @@ public class PlayerAnimationManager : MonoBehaviour
 
     [Header("Idle anim params")]
 
-    [SerializeField] private PlayerAnimationDataSO _idleBodyAnim;
-    public PlayerAnimationDataSO IdleBodyAnim => _idleBodyAnim;
+    [SerializeField] private PlayerAnimationDataSO _idleUpperBodyAnim;
+    public PlayerAnimationDataSO IdleUpperBodyAnim => _idleUpperBodyAnim;
 
-    [SerializeField] private PlayerAnimationDataSO _idleLegsAnim;
-    public PlayerAnimationDataSO IdleLegsAnim => _idleLegsAnim;
+    [SerializeField] private PlayerAnimationDataSO _idleBaseAnim;
+    public PlayerAnimationDataSO IdleBaseAnim => _idleBaseAnim;
 
     [Header("Move anim params")]
 
-    [SerializeField] private PlayerAnimationDataSO _moveBodyAnim;
-    public PlayerAnimationDataSO MoveBodyAnim => _moveBodyAnim;
+    [SerializeField] private PlayerAnimationDataSO _moveUpperBodyAnim;
+    public PlayerAnimationDataSO MoveUpperBodyAnim => _moveUpperBodyAnim;
 
-    [SerializeField] private PlayerAnimationDataSO _moveLegsAnim;
-    public PlayerAnimationDataSO MoveLegsAnim => _moveLegsAnim;
+    [SerializeField] private PlayerAnimationDataSO _moveBaseAnim;
+    public PlayerAnimationDataSO MoveBaseAnim => _moveBaseAnim;
+
+    [Header("Air anim params")]
+
+    [SerializeField] private PlayerAnimationDataSO _jumpUpperBodyAnim;
+    public PlayerAnimationDataSO JumpUpperBodyAnim => _jumpUpperBodyAnim;
+
+    [SerializeField] private PlayerAnimationDataSO _jumpBaseAnim;
+    public PlayerAnimationDataSO JumpBaseAnim => _jumpBaseAnim;
+
+    [SerializeField] private PlayerAnimationDataSO _fallUpperBodyAnim;
+    public PlayerAnimationDataSO FallUpperBodyAnim => _fallUpperBodyAnim;
+
+    [SerializeField] private PlayerAnimationDataSO _fallBaseAnim;
+    public PlayerAnimationDataSO FallBaseAnim => _fallBaseAnim;
 
     [Header("Use item anim params")]
     [SerializeField] private PlayerAnimationDataSO _useItemSwingAnim;

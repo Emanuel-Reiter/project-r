@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfcfec47cb475e147bfe28d4b2ac7a74, type: 3}
+  m_Name: UseItem_UpperBody_Consume_PlayerAnimData
+  m_EditorClassIdentifier: 
+  SamplingRate: 10
+  FrameIndex: 05000000050000000400000003000000020000000100000001000000

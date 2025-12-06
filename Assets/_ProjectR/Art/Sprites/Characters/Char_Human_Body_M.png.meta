@@ -473,6 +473,50 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Char_Human_Body_M_17
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 48
+        height: 48
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e139e1d863f8e54e8b9bdf5091d3ef8
+      internalID: -508321148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Char_Human_Body_M_18
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 48
+        height: 48
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 36c0af01c8769d045965360df830f15c
+      internalID: 1485763677
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -496,6 +540,8 @@ TextureImporter:
       Char_Human_Body_M_14: -1476150296
       Char_Human_Body_M_15: 770287960
       Char_Human_Body_M_16: -1427760830
+      Char_Human_Body_M_17: -508321148
+      Char_Human_Body_M_18: 1485763677
       Char_Human_Body_M_2: -522054261
       Char_Human_Body_M_3: 504487243
       Char_Human_Body_M_4: 1553720656

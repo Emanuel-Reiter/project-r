@@ -1,29 +1,29 @@
 using UnityEngine;
 
-public class PlayerMoveState : PlayerBaseState
+public class PlayerFallState : PlayerBaseState
 {
-    [Header("Transition params")]
     [SerializeField] private PlayerIdleState _idleState;
-    [SerializeField] private PlayerFallState _fallState;
+    [SerializeField] private PlayerMoveState _moveState;
     [SerializeField] private PlayerJumpState _jumpState;
 
     public override void CheckExitState(PlayerStateManager player)
     {
         if (!FinishedExitTime()) return;
 
-        if (!player.Deps.Locomotion.IsGrounded)
-        {
-            player.SwitchState(_fallState);
-            return;
-        }
-
-        if (player.Deps.Input.IsJumpPressed && player.Deps.Locomotion.CanJump())
+        if(player.Deps.Input.IsJumpPressed && player.Deps.Locomotion.CanJump())
         {
             player.SwitchState(_jumpState);
             return;
         }
 
-        if (player.Deps.Locomotion.HorizontalVel == 0f)
+        if (!player.Deps.Locomotion.IsGrounded) return;
+
+        if (player.Deps.Locomotion.HorizontalVel != 0f)
+        {
+            player.SwitchState(_moveState);
+            return;
+        }
+        else
         {
             player.SwitchState(_idleState);
             return;
@@ -32,7 +32,9 @@ public class PlayerMoveState : PlayerBaseState
 
     public override void EnterState(PlayerStateManager player)
     {
-        player.Deps.Animation.PlayBaseAnimation(player.Deps.Animation.MoveBaseAnim);
+        InitializeState();
+
+        player.Deps.Animation.PlayBaseAnimation(player.Deps.Animation.FallBaseAnim);
     }
 
     public override void ExitState(PlayerStateManager player)

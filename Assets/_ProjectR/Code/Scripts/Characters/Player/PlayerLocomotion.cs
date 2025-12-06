@@ -9,27 +9,27 @@ public class PlayerLocomotion : NetworkBehaviour
     [SerializeField] private float _moveSpeed = 5f;
     [SerializeField] private float _acceleration = 20f;
 
-    [Header("Gravity params")]
-    [SerializeField] private float _gravity = -12f;
-    [SerializeField] private float _maxVerticalVel = -50f;
-
     [Header("Jump params")]
-    [SerializeField] private float _jumpHeight = 4f;
-    public bool IsJumping { get; private set; } = false;
+    [SerializeField] private float _jumpHeight = 5f;
+
+    private bool _isJumping = false;
+    public bool IsJumping => _isJumping;
 
     [Header("Ground check")]
     [SerializeField] private LayerMask _groundLayers;
+    [SerializeField] private float _groundCheckRadius = 0.2f;
+    [SerializeField] private Vector2 _groundCheckOffset = Vector2.zero;
     public bool IsGrounded { get; private set; } = false;
 
+    [Header("Velocity params")]
     private float _horizontalVel = 0f;
     public float HorizontalVel => _horizontalVel;
 
     private float _verticalVel = 0f;
     public float VerticalVel => _verticalVel;
 
-    public float MoveThreshold { get; private set; } = 0.05f;
-
     private bool _isFacingRight = true;
+
 
     [Header("Mouse params")]
     private Vector3 _mousePosistion;
@@ -38,8 +38,11 @@ public class PlayerLocomotion : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         if (!IsOwner) return;
-
         _deps = GetComponent<PlayerDependencies>();
+
+        // Rigidbosy setup
+        _deps.Rigidbody.gravityScale = 3f;
+        _deps.Rigidbody.linearDamping = 0f;
     }
 
     private void Update()
@@ -47,22 +50,23 @@ public class PlayerLocomotion : NetworkBehaviour
         if (!IsOwner) return;
 
         CheckMousePosition();
+    }
+
+    private void FixedUpdate()
+    {
+        if (!IsOwner) return;
+
         CheckForGround();
+        ApplyHorizontalMovement();
+
+        // Sets the Rigidbody vertical linear velocity
+        _verticalVel = _deps.Rigidbody.linearVelocityY;
     }
 
     private void CheckMousePosition()
     {
         _mousePosistion = Input.mousePosition;
         _screenCenter = Screen.width / 2f;
-    }
-
-    public void Move()
-    {
-        if (!IsOwner) return;
-
-        Vector2 moveVector = new Vector2(_horizontalVel, _verticalVel);
-
-        _deps.Rigidbody.linearVelocity = moveVector;
     }
 
     public void RotateTowardsMovement()
@@ -104,49 +108,39 @@ public class PlayerLocomotion : NetworkBehaviour
         }
     }
 
-    public void CalculateHorizontalVel()
+    private void ApplyHorizontalMovement()
     {
-        _horizontalVel = Mathf.MoveTowards(_horizontalVel, _moveSpeed * _deps.Input.MovementDirection.x, _acceleration * Time.deltaTime);
-    }
+        float targetSpeed = _deps.Input.MovementDirection.x * _moveSpeed;
 
-    public void CalculateVerticalVel()
-    {
-        if (IsJumping) return;
+        _horizontalVel = Mathf.MoveTowards(_horizontalVel, targetSpeed, _acceleration * Time.fixedDeltaTime);
 
-        if (IsGrounded)
-        {
-            _verticalVel = _gravity;
-        }
-        else
-        {
-            _verticalVel = Mathf.MoveTowards(_verticalVel, _maxVerticalVel, _gravity * Time.deltaTime);
-        }
+        if (Mathf.Abs(_horizontalVel) < 0.1f && Mathf.Abs(targetSpeed) < 0.1f) _horizontalVel = 0f;
+
+        Vector2 currentVelocity = _deps.Rigidbody.linearVelocity;
+        currentVelocity.x = _horizontalVel;
+        _deps.Rigidbody.linearVelocity = currentVelocity;
     }
+    
+    public bool CanJump() => IsGrounded;
 
     public void Jump()
     {
-        if (!IsOwner || !IsGrounded || IsJumping) return;
+        if (!IsOwner) return;
 
-        IsJumping = true;
+        Vector2 velocity = _deps.Rigidbody.linearVelocity;
+        float gravity = 9.81f * _deps.Rigidbody.gravityScale;
+        float smallJumpHeightAdjust = 0.25f;
 
-        Debug.Log("Jumped!");
-
-        _verticalVel = -2.0f * _gravity * _jumpHeight;
-
-        Invoke("HandleJump", 0.02f);
-    }
-
-    private void HandleJump()
-    {
-        IsJumping = false;
+        _verticalVel = 0f;
+        velocity.y = Mathf.Sqrt(2f * gravity * (_jumpHeight + smallJumpHeightAdjust));
+        _deps.Rigidbody.linearVelocity = velocity;
     }
 
     private void CheckForGround()
     {
-        Vector2 origin = transform.position;
-        float radius = 0.333f;
-
-        IsGrounded = Physics2D.OverlapCircle(origin, radius, _groundLayers);
+        Vector2 origin = (Vector2)transform.position + _groundCheckOffset;
+        RaycastHit2D hit = Physics2D.CircleCast(origin, _groundCheckRadius, Vector2.down, 0.01f, _groundLayers);
+        IsGrounded = hit.collider != null;
     }
 
     private void OnDrawGizmos()
@@ -154,8 +148,7 @@ public class PlayerLocomotion : NetworkBehaviour
         if (!Application.isPlaying) return;
 
         Gizmos.color = IsGrounded ? Color.green : Color.red;
-        Vector2 origin = transform.position;
-        float radius = 0.333f;
-        Gizmos.DrawWireSphere(origin, radius);
+        Vector2 origin = (Vector2)transform.position + _groundCheckOffset;
+        Gizmos.DrawWireSphere(origin, _groundCheckRadius);
     }
 }

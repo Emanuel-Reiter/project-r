@@ -105,7 +105,7 @@ public class PlayerDebugUI : MonoBehaviour
         GUI.Label(new Rect(xOffset, GUIPositionY(9, height), width, height), $"body: {_deps.NetworkedVisuals.GetCurrentBodyIndex()}");
         GUI.Label(new Rect(xOffset, GUIPositionY(10, height), width, height), $"legs: {_deps.NetworkedVisuals.GetCurrentLegsIndex()}");
         
-        GUI.Label(new Rect(xOffset, GUIPositionY(12, height), width, height), $"useItemHold: {_deps.Input.IsUseItemHold}");
+        GUI.Label(new Rect(xOffset, GUIPositionY(12, height), width, height), $"useItemHold: {_deps.Input.IsUseItemHeld}");
         
         GUI.Label(new Rect(xOffset, GUIPositionY(14, height), width, height), $"isGrounded: {_deps.Locomotion.IsGrounded}");
         GUI.Label(new Rect(xOffset, GUIPositionY(15, height), width, height), $"isJuping: {_deps.Locomotion.IsJumping}");
