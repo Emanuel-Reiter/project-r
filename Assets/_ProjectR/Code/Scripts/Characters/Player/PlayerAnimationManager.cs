@@ -8,6 +8,7 @@ public class PlayerAnimationManager : MonoBehaviour
     private PlayerDependencies _deps;
 
     private int _upperBodyFrameIndex = 0;
+    public int UpperBodyFrameIndex => _upperBodyFrameIndex;
     private Coroutine _bodyCoroutine;
 
     private int _baseFrameIndex = 0;

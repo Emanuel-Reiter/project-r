@@ -27,6 +27,9 @@ public class PlayerInputManager : MonoBehaviour
     private bool _isUseItemPressed = false;
     public bool IsUseItemPressed => _isUseItemPressed;
 
+    private bool _isUseItemHold = false;
+    public bool IsUseItemHold => _isUseItemHold;
+
     // Other
     private bool _isInteractPressed = false;
     public bool InteractPressed => _isInteractPressed;
@@ -57,7 +60,7 @@ public class PlayerInputManager : MonoBehaviour
     private void SubscribeToAllActions()
     {
         // Jump
-        _playerInputActions.Default.Jump.started += ProcessPerformedJumpInput;
+        _playerInputActions.Default.Jump.started += ProcessStartedJumpInput;
         _playerInputActions.Default.Jump.canceled += ProcessCanceledJumpInput;
 
         // Sprint (Hold)
@@ -65,26 +68,27 @@ public class PlayerInputManager : MonoBehaviour
         _playerInputActions.Default.Sprint.canceled += ProcessCanceledSprintInput;
 
         // Dash
-        _playerInputActions.Default.Dash.started += ProcessPerformedDashInput;
+        _playerInputActions.Default.Dash.started += ProcessStartedDashInput;
         _playerInputActions.Default.Dash.canceled += ProcessCanceledDashInput;
 
-        // Attack Light
-        _playerInputActions.Default.UseItem.started += ProcessPerformedAttackLightInput;
-        _playerInputActions.Default.UseItem.canceled += ProcessCanceledAttackLightInput;
+        // Use Item
+        _playerInputActions.Default.UseItem.started += ProcessStartedUseItemInput;
+        _playerInputActions.Default.UseItem.performed += ProcessPerformedUseItemInput;
+        _playerInputActions.Default.UseItem.canceled += ProcessCanceledUseItemInput;
 
         // Interact
-        _playerInputActions.Default.Interact.started += ProcessPerformedInteractInput;
+        _playerInputActions.Default.Interact.started += ProcessStartedInteractInput;
         _playerInputActions.Default.Interact.canceled += ProcessCanceledInteractInput;
 
         // Inventory
-        _playerInputActions.Default.Inventory.started += ProcessPerformedInventoryInput;
+        _playerInputActions.Default.Inventory.started += ProcessStartedInventoryInput;
         _playerInputActions.Default.Inventory.canceled += ProcessCanceledInventoryInput;
     }
 
     private void UnsubscribeFromAllActions()
     {
         // Jump
-        _playerInputActions.Default.Jump.started -= ProcessPerformedJumpInput;
+        _playerInputActions.Default.Jump.started -= ProcessStartedJumpInput;
         _playerInputActions.Default.Jump.canceled -= ProcessCanceledJumpInput;
 
         // Sprint
@@ -92,24 +96,25 @@ public class PlayerInputManager : MonoBehaviour
         _playerInputActions.Default.Sprint.canceled -= ProcessCanceledSprintInput;
 
         // Dash
-        _playerInputActions.Default.Dash.started -= ProcessPerformedDashInput;
+        _playerInputActions.Default.Dash.started -= ProcessStartedDashInput;
         _playerInputActions.Default.Dash.canceled -= ProcessCanceledDashInput;
 
-        // Attack Light
-        _playerInputActions.Default.UseItem.started -= ProcessPerformedAttackLightInput;
-        _playerInputActions.Default.UseItem.canceled -= ProcessCanceledAttackLightInput;
+        // Use Item
+        _playerInputActions.Default.UseItem.started -= ProcessStartedUseItemInput;
+        _playerInputActions.Default.UseItem.performed -= ProcessPerformedUseItemInput;
+        _playerInputActions.Default.UseItem.canceled -= ProcessCanceledUseItemInput;
 
         // Interact
-        _playerInputActions.Default.Interact.started -= ProcessPerformedInteractInput;
+        _playerInputActions.Default.Interact.started -= ProcessStartedInteractInput;
         _playerInputActions.Default.Interact.canceled -= ProcessCanceledInteractInput;
 
         // Inventory
-        _playerInputActions.Default.Inventory.started -= ProcessPerformedInventoryInput;
+        _playerInputActions.Default.Inventory.started -= ProcessStartedInventoryInput;
         _playerInputActions.Default.Inventory.canceled -= ProcessCanceledInventoryInput;
     }
 
     // Jump
-    private void ProcessPerformedJumpInput(InputAction.CallbackContext context) { StartCoroutine(ProcessPerformedJumpInputCoroutine()); }
+    private void ProcessStartedJumpInput(InputAction.CallbackContext context) { StartCoroutine(ProcessStartedJumpInputCoroutine()); }
     private void ProcessCanceledJumpInput(InputAction.CallbackContext context) { _isJumpPressed = false; }
 
     // Sprint 
@@ -117,19 +122,20 @@ public class PlayerInputManager : MonoBehaviour
     private void ProcessCanceledSprintInput(InputAction.CallbackContext context) { _isSprintHold = false; }
 
     // Dash
-    private void ProcessPerformedDashInput(InputAction.CallbackContext context) { StartCoroutine(ProcessPerformedDashInputCoroutine()); }
+    private void ProcessStartedDashInput(InputAction.CallbackContext context) { StartCoroutine(ProcessStartedDashInputCoroutine()); }
     private void ProcessCanceledDashInput(InputAction.CallbackContext context) { _isDashPressed = false; }
 
-    // Attack Light
-    private void ProcessPerformedAttackLightInput(InputAction.CallbackContext context) { StartCoroutine(ProcessPerformedAttackLightInputtCoroutine()); }
-    private void ProcessCanceledAttackLightInput(InputAction.CallbackContext context) { _isUseItemPressed = false; }
+    // Use Item
+    private void ProcessStartedUseItemInput(InputAction.CallbackContext context) { StartCoroutine(ProcessStartedUseItemInputCoroutine()); }
+    private void ProcessPerformedUseItemInput(InputAction.CallbackContext context) { _isUseItemHold = true; }
+    private void ProcessCanceledUseItemInput(InputAction.CallbackContext context) { _isUseItemPressed = false; _isUseItemHold = false; }
 
     // Interact
-    private void ProcessPerformedInteractInput(InputAction.CallbackContext context) { StartCoroutine(ProcessPerformedInteractInputCoroutine()); }
+    private void ProcessStartedInteractInput(InputAction.CallbackContext context) { StartCoroutine(ProcessStartedInteractInputCoroutine()); }
     private void ProcessCanceledInteractInput(InputAction.CallbackContext context) { _isInteractPressed = false; }
 
     // Inventory
-    private void ProcessPerformedInventoryInput(InputAction.CallbackContext context) { StartCoroutine(ProcessPerformedInventoryInputCoroutine()); }
+    private void ProcessStartedInventoryInput(InputAction.CallbackContext context) { StartCoroutine(ProcessStartedInventoryInputCoroutine()); }
     private void ProcessCanceledInventoryInput(InputAction.CallbackContext context) { _isInventoryPressed = false; }
 
     // Movement Direction
@@ -145,7 +151,7 @@ public class PlayerInputManager : MonoBehaviour
     }
 
     // Jump
-    private IEnumerator ProcessPerformedJumpInputCoroutine()
+    private IEnumerator ProcessStartedJumpInputCoroutine()
     {
         _isJumpPressed = true;
         yield return null;
@@ -157,15 +163,15 @@ public class PlayerInputManager : MonoBehaviour
     }
 
     // Dash
-    private IEnumerator ProcessPerformedDashInputCoroutine()
+    private IEnumerator ProcessStartedDashInputCoroutine()
     {
         _isDashPressed = true;
         yield return null;
         if (this != null) _isDashPressed = false;
     }
 
-    // Attack Light
-    private IEnumerator ProcessPerformedAttackLightInputtCoroutine()
+    // Use Item
+    private IEnumerator ProcessStartedUseItemInputCoroutine()
     {
         _isUseItemPressed = true;
         yield return null;
@@ -173,7 +179,7 @@ public class PlayerInputManager : MonoBehaviour
     }
 
     // Interact
-    private IEnumerator ProcessPerformedInteractInputCoroutine()
+    private IEnumerator ProcessStartedInteractInputCoroutine()
     {
         _isInteractPressed = true;
         yield return null;
@@ -181,7 +187,7 @@ public class PlayerInputManager : MonoBehaviour
     }
 
     // Inventory
-    private IEnumerator ProcessPerformedInventoryInputCoroutine()
+    private IEnumerator ProcessStartedInventoryInputCoroutine()
     {
         _isInventoryPressed = true;
         yield return null;

@@ -10,7 +10,7 @@ public class PlayerIdleState : PlayerBaseState
     {
         if (!FinishedExitTime()) return;
 
-        if (player.Deps.Locomotion.VelocityMagnitude > 0f)
+        if (player.Deps.Locomotion.HorizontalVel != 0f)
         {
             player.SwitchState(_moveState);
             return;
@@ -31,7 +31,12 @@ public class PlayerIdleState : PlayerBaseState
 
     public override void UpdateState(PlayerStateManager player)
     {
-        if (player.Deps.Input.IsUseItemPressed) player.Deps.UseItem.Use();
+        player.Deps.Locomotion.CalculateHorizontalVel();
+        player.Deps.Locomotion.CalculateVerticalVel();
+
+        if (player.Deps.Input.IsUseItemHold) player.Deps.UseItem.Use();
+
+        if (player.Deps.Input.IsJumpPressed) player.Deps.Locomotion.Jump();
     }
 
     public override void FixedUpdateState(PlayerStateManager player)

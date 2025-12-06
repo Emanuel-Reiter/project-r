@@ -10,7 +10,7 @@ public class PlayerItemContainer : NetworkBehaviour
     private NetworkVariable<float> _itemContainerRotation = new NetworkVariable<float> (0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
 
-    private Vector2 _itemContainerAngleMinMax = new Vector2(45f, -140f);
+    private Vector2 _itemContainerAngleMinMax = new Vector2(60f, -150f);
 
     private Coroutine _useItemCoroutine;
    

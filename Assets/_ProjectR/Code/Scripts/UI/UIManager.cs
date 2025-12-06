@@ -32,6 +32,9 @@ public class UIManager : MonoBehaviour
     [Header("Menu cover")]
     [SerializeField] private CanvasGroup _menuCover;
 
+    [Header("Camera")]
+    [SerializeField] private Camera _menuCamera;
+
     private void Start()
     {
         InitializeContainers();
@@ -120,6 +123,11 @@ public class UIManager : MonoBehaviour
     public void ExitGame()
     {
         Application.Quit();
+    }
+
+    public void DisableMenuCamera()
+    {
+        _menuCamera.gameObject.SetActive(false);
     }
     #endregion
 

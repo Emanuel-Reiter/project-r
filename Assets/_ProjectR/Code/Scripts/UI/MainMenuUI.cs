@@ -14,10 +14,12 @@ public class MainMenuUI : MonoBehaviour
         _hostButton.onClick.AddListener(() =>
         {
             NetworkManager.Singleton.StartHost();
+            UIManager.Instance.DisableMenuCamera();
         });
 
         _clientButton.onClick.AddListener(() => {
             NetworkManager.Singleton.StartClient();
+            UIManager.Instance.DisableMenuCamera();
         });
     }
 }

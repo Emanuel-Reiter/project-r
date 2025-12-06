@@ -96,12 +96,18 @@ public class PlayerDebugUI : MonoBehaviour
         if (!_showPlayerMetrics) return;
 
         GUI.Label(new Rect(xOffset, GUIPositionY(2, height), width, height), $"curState: {_state.CurrentState}");
-        GUI.Label(new Rect(xOffset, GUIPositionY(3, height), width, height), $"targetVel: {_locomotion.VelocityMagnitude}");
+        GUI.Label(new Rect(xOffset, GUIPositionY(3, height), width, height), $"horizontalVel: {_locomotion.HorizontalVel}");
+        GUI.Label(new Rect(xOffset, GUIPositionY(4, height), width, height), $"verticalVel: {_locomotion.VerticalVel}");
         
-        GUI.Label(new Rect(xOffset, GUIPositionY(4, height), width, height), $"-= ANIMATION INDEXES =-");
-        GUI.Label(new Rect(xOffset, GUIPositionY(5, height), width, height), $"armF: {_deps.NetworkedVisuals.GetCurrentArmFIndex()}");
-        GUI.Label(new Rect(xOffset, GUIPositionY(6, height), width, height), $"head: {_deps.NetworkedVisuals.GetCurrentHeadIndex()}");
-        GUI.Label(new Rect(xOffset, GUIPositionY(7, height), width, height), $"body: {_deps.NetworkedVisuals.GetCurrentBodyIndex()}");
-        GUI.Label(new Rect(xOffset, GUIPositionY(8, height), width, height), $"legs: {_deps.NetworkedVisuals.GetCurrentLegsIndex()}");
+        GUI.Label(new Rect(xOffset, GUIPositionY(6, height), width, height), $"-= ANIMATION INDEXES =-");
+        GUI.Label(new Rect(xOffset, GUIPositionY(7, height), width, height), $"armF: {_deps.NetworkedVisuals.GetCurrentArmFIndex()}");
+        GUI.Label(new Rect(xOffset, GUIPositionY(8, height), width, height), $"head: {_deps.NetworkedVisuals.GetCurrentHeadIndex()}");
+        GUI.Label(new Rect(xOffset, GUIPositionY(9, height), width, height), $"body: {_deps.NetworkedVisuals.GetCurrentBodyIndex()}");
+        GUI.Label(new Rect(xOffset, GUIPositionY(10, height), width, height), $"legs: {_deps.NetworkedVisuals.GetCurrentLegsIndex()}");
+        
+        GUI.Label(new Rect(xOffset, GUIPositionY(12, height), width, height), $"useItemHold: {_deps.Input.IsUseItemHold}");
+        
+        GUI.Label(new Rect(xOffset, GUIPositionY(14, height), width, height), $"isGrounded: {_deps.Locomotion.IsGrounded}");
+        GUI.Label(new Rect(xOffset, GUIPositionY(15, height), width, height), $"isJuping: {_deps.Locomotion.IsJumping}");
     }
 }

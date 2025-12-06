@@ -8,6 +8,8 @@ public class PlayerUseItem : NetworkBehaviour
     private bool _isUsingItem = false;
     public bool IsUsingItem => _isUsingItem;
 
+    private bool _queueUseItem = false;
+
     public override void OnNetworkSpawn()
     {
         _deps = GetComponent<PlayerDependencies>();
@@ -15,13 +17,15 @@ public class PlayerUseItem : NetworkBehaviour
 
     public void Use()
     {
+
         if (!IsOwner || _isUsingItem) return;
 
+        _queueUseItem = false;
         _isUsingItem = true;
 
         PlayerAnimationDataSO cachedAnim = _deps.Animation.UseItemSwingAnim;
 
-        float frameTimeMultiplaier = 1.05f;
+        float frameTimeMultiplaier = 0.95f;
         float itemUseTime = (_deps.Animation.BaseAnimDurationConstant / cachedAnim.SamplingRate) * (cachedAnim.FrameIndex.Length * frameTimeMultiplaier);
 
         _deps.Animation.PlayUpperBodyAnimation(cachedAnim, () => { _isUsingItem = false; });
